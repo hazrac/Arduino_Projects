@@ -17,13 +17,12 @@ Notes from button Sketch:
 
 // static variables:
 // set the buttonPin
-const int buttonPin = 2;
+const int buttonPin = 11;
 // set the EL pins
 const int ledPinA = 2;
 const int ledPinB = 3;
 const int ledPinC = 4;
 const int ledPinD = 5;
-const int ledPinE = 6;
 // set your timeout
 const int timeOut = 1800000; // 30 min is 1800000ms
 // set Debonce Time
@@ -40,11 +39,11 @@ long lastDebounceTime = 0;  // the last time the output pin was toggled
 void setup() {
   // The EL channels are on pins 2 through 9
   // Initialize the pins as outputs
-  // pinMode(ledPinA, OUTPUT);  // channel A
+  pinMode(ledPinA, OUTPUT);  // channel A
   pinMode(ledPinB, OUTPUT);  // channel B
   pinMode(ledPinC, OUTPUT);  // channel C
   pinMode(ledPinD, OUTPUT);  // channel D
-  pinMode(ledPinE, OUTPUT);  // channel E
+  
 
   // initialize the pushbutton pin as an input:
   pinMode(buttonPin, INPUT);
@@ -86,46 +85,34 @@ void loop() {
   // This needs to be a case statement
   if (buttonPushCounter != lastbuttonPushCounter) {
     switch (buttonPushCounter) {
-     /* case 0:
-        digitalWrite(ledPinB, LOW);   // turn the EL channel off
-        digitalWrite(ledPinC, LOW);   // turn the EL channel off
-        digitalWrite(ledPinD, LOW);   // turn the EL channel off
-        digitalWrite(ledPinE, LOW);   // turn the EL channel off
-        Serial.println("Case 0");
-        break;
-      */
       case 1:
         //Button pushed once white light
-        //digitalWrite(ledPinA, HIGH);   // turn the EL channel on
+        digitalWrite(ledPinA, HIGH);   // turn the EL channel on
         digitalWrite(ledPinB, HIGH);   // turn the EL channel on
-        digitalWrite(ledPinC, HIGH);   // turn the EL channel on
         Serial.println("Case 1");
         break;
       case 2:
         //Button pushed twice blue light
-        //digitalWrite(ledPinA, LOW);   // turn the EL channel on
-        digitalWrite(ledPinB, LOW);   // turn the EL channel on
-        digitalWrite(ledPinC, LOW);   // turn the EL channel on
+        digitalWrite(ledPinA, LOW);   // turn the EL channel off
+        digitalWrite(ledPinB, LOW);   // turn the EL channel off
+        digitalWrite(ledPinC, HIGH);   // turn the EL channel on
         digitalWrite(ledPinD, HIGH);   // turn the EL channel on
-        digitalWrite(ledPinE, HIGH);   // turn the EL channel on
         Serial.println("Case 2");
         break;
       case 3:
         //Button pushed three times blue & white lights
-        //digitalWrite(ledPinA, HIGH);   // turn the EL channel on
+        digitalWrite(ledPinA, HIGH);   // turn the EL channel on
         digitalWrite(ledPinB, HIGH);   // turn the EL channel on
         digitalWrite(ledPinC, HIGH);   // turn the EL channel on
         digitalWrite(ledPinD, HIGH);   // turn the EL channel on
-        digitalWrite(ledPinE, HIGH);   // turn the EL channel on
         Serial.println("Case 3");
         break;
       case 4:
         // Turn EL wire off and reset counter
-        //digitalWrite(ledPinA, LOW);   // turn the EL channel off
+        digitalWrite(ledPinA, LOW);   // turn the EL channel off
         digitalWrite(ledPinB, LOW);   // turn the EL channel off
         digitalWrite(ledPinC, LOW);   // turn the EL channel off
         digitalWrite(ledPinD, LOW);   // turn the EL channel off
-        digitalWrite(ledPinE, LOW);   // turn the EL channel off
         Serial.println("Case 4");
         buttonPushCounter = 0;
         break;
@@ -134,10 +121,10 @@ void loop() {
 
     // when last debounce time - now is greater than timeout shutoff lights
     if ((millis() - lastDebounceTime) > timeOut) {
+      digitalWrite(ledPinA, LOW);   // turn the EL channel off
       digitalWrite(ledPinB, LOW);   // turn the EL channel off
       digitalWrite(ledPinC, LOW);   // turn the EL channel off
       digitalWrite(ledPinD, LOW);   // turn the EL channel off
-      digitalWrite(ledPinE, LOW);   // turn the EL channel off
       Serial.println("Hit timeout");
       buttonPushCounter = 0;
     }
