@@ -17,7 +17,7 @@ Notes from button Sketch:
 
 // static variables:
 // set the buttonPin
-const int buttonPin = 11;
+const int buttonPin = 1;
 // set the EL pins
 const int ledPinA = 2;
 const int ledPinB = 3;
@@ -133,3 +133,4 @@ void loop() {
     lastButtonState = buttonState;
 
 }
+
