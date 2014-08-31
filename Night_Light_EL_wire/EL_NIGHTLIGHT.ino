@@ -1,9 +1,12 @@
 /* Sketch to create a 4 EL wire nightlight using SparkFun's El Escudo Dos and a button
 Right now -> turn EL channels (A-D) on with the press of a button
 
-Eventually turn on EL channels A&B on one press, turn them off while turning C&D on two presses
+Now this turns on EL channels A&B on one press, turn them off while turning C&D on two presses
 turn A,B,C,D on three presses, and turn them all off on four presses.
 If the lights are on, turn them off after 30 minutes.
+
+In addition this has code for an LED on the actual button.  On a press the button light comes on
+and stays on for 2 seconds then shuts off.
 
 Created by David Mitchell (@hazrac)
 Credit to Mike Grusin of SparkFun Electronics & Tom Igoe
@@ -23,8 +26,12 @@ const int ledPinA = 2;
 const int ledPinB = 3;
 const int ledPinC = 4;
 const int ledPinD = 5;
-// set your timeout
+// set your EL wire timeout
 const int timeOut = 1800000; // 30 min is 1800000ms
+// button LED
+const int btnledPin = 13;
+// set your button LED timeout
+const int btntimeOut = 2000;
 // set Debonce Time
 const long debounceDelay = 20;    // the debounce time; increase if the output flickers
 
@@ -43,7 +50,7 @@ void setup() {
   pinMode(ledPinB, OUTPUT);  // channel B
   pinMode(ledPinC, OUTPUT);  // channel C
   pinMode(ledPinD, OUTPUT);  // channel D
-  
+
 
   // initialize the pushbutton pin as an input:
   pinMode(buttonPin, INPUT);
@@ -73,6 +80,7 @@ void loop() {
          // if the current state is HIGH then the button
          // went from off to on:
          buttonPushCounter++;
+         digitalWrite(btnledPin, HIGH); // turn on button LED
          Serial.println("on");
          Serial.print("number of button pushes:  ");
          Serial.println(buttonPushCounter);
@@ -128,9 +136,10 @@ void loop() {
       Serial.println("Hit timeout");
       buttonPushCounter = 0;
     }
-
+   if ((millis() - lastDebounceTime) > btntimeOut ) {
+      digitalWrite(btnledPin, LOW); // turn off button LED
+   }
     lastbuttonPushCounter = buttonPushCounter;
     lastButtonState = buttonState;
 
 }
-
