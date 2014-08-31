@@ -51,7 +51,8 @@ void setup() {
   pinMode(ledPinC, OUTPUT);  // channel C
   pinMode(ledPinD, OUTPUT);  // channel D
 
-
+  pinMode(btnledPin, OUTPUT); // button LED
+  
   // initialize the pushbutton pin as an input:
   pinMode(buttonPin, INPUT);
 
