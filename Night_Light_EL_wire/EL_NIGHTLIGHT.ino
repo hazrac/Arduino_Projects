@@ -27,7 +27,7 @@ const int ledPinB = 3;
 const int ledPinC = 4;
 const int ledPinD = 5;
 // set your EL wire timeout
-const int timeOut = 1800000; // 30 min is 1800000ms
+const int timeOut = 180000000; // 30 min is 1800000ms
 // button LED
 const int btnledPin = 13;
 // set your button LED timeout
