@@ -6,7 +6,7 @@ turn A,B,C,D on three presses, and turn them all off on four presses.
 If the lights are on, turn them off after 30 minutes.
 
 In addition this has code for an LED on the actual button.  On a press the button light comes on
-and stays on for 2 seconds then shuts off.
+and stays on for 5 seconds then shuts off.
 
 Created by David Mitchell (@hazrac)
 Credit to Mike Grusin of SparkFun Electronics & Tom Igoe
@@ -27,11 +27,11 @@ const int ledPinB = 3;
 const int ledPinC = 4;
 const int ledPinD = 5;
 // set your EL wire timeout
-const int timeOut = 180000000; // 30 min is 1800000ms
+const int timeOut = 1800000; // 30 min is 1800000ms
 // button LED
 const int btnledPin = 13;
 // set your button LED timeout
-const int btntimeOut = 2000;
+const int btntimeOut = 5000; // 5 seconds
 // set Debonce Time
 const long debounceDelay = 20;    // the debounce time; increase if the output flickers
 
