@@ -27,11 +27,11 @@ const int ledPinB = 3;
 const int ledPinC = 4;
 const int ledPinD = 5;
 // set your EL wire timeout
-const int timeOut = 1800000; // 30 min is 1800000ms
+const long timeOut = 1800000; // 30 min is 1800000ms
 // button LED
 const int btnledPin = 13;
 // set your button LED timeout
-const int btntimeOut = 5000; // 5 seconds
+const long btntimeOut = 5000; // 5 seconds
 // set Debonce Time
 const long debounceDelay = 20;    // the debounce time; increase if the output flickers
 
@@ -67,31 +67,33 @@ void loop() {
   // Serial.println(buttonState);
   // If the switch changed, due to noise or pressing:
   if (buttonState != lastButtonState) {
-    // reset the debouncing timer
-    lastDebounceTime = millis();
-    Serial.print("millis minus last debounce");
+
+    Serial.print("millis minus last debounce: ");
     Serial.println(millis() - lastDebounceTime);
     Serial.print("debounce delay:");
     Serial.println(debounceDelay);
 
 
     if ((millis() - lastDebounceTime) > debounceDelay) {
+         // reset the debouncing timer
+        lastDebounceTime = millis();
         // if the state has changed, increment the counter
         if (buttonState == 1) {
          // if the current state is HIGH then the button
          // went from off to on:
          buttonPushCounter++;
          digitalWrite(btnledPin, HIGH); // turn on button LED
-         Serial.println("on");
-         Serial.print("number of button pushes:  ");
-         Serial.println(buttonPushCounter);
+        // Serial.println("on");
+        // Serial.print("number of button pushes:  ");
+        // Serial.println(buttonPushCounter);
        }
      }
   }
 
-  Serial.print("button push counter: ");
-  Serial.println(buttonPushCounter);
-  // This needs to be a case statement
+   Serial.print("button push counter: ");
+   Serial.println(buttonPushCounter);
+   
+  // Case statement depending on the number of button pushes
   if (buttonPushCounter != lastbuttonPushCounter) {
     switch (buttonPushCounter) {
       case 1:
@@ -135,6 +137,10 @@ void loop() {
       digitalWrite(ledPinC, LOW);   // turn the EL channel off
       digitalWrite(ledPinD, LOW);   // turn the EL channel off
       Serial.println("Hit timeout");
+      Serial.print("delta: ");
+      Serial.println(millis() - lastDebounceTime);
+      Serial.print("timeOut: ");
+      Serial.println(timeOut);
       buttonPushCounter = 0;
     }
    if ((millis() - lastDebounceTime) > btntimeOut ) {
