@@ -79,19 +79,33 @@ void stop()//
  
 }
 
+void testa()//
+{
+    analogWrite(speedpinA, spead);
+    //digitalWrite(pinI2,LOW);
+    digitalWrite(pinI2,HIGH); // I2 makes it go clockwise and I1 makes it go counter-clockwise
+}
+
 void loop()
 {
-  left();
+// What I added to test just motor A
+  testa();
   delay(2000);
-  stop();
-  right();
-  delay(2000);
-  stop();
+  //stop();
+
+
+// Original code  
+//  left();
+//  delay(2000);
+//  stop();
+//  right();
+  //delay(2000);
+ // stop();
  // delay(2000);
-  forward();
-  delay(2000);
-  stop();
-  backward();
-  delay(2000); 
-  stop(); 
+ // forward();
+ // delay(2000);
+ // stop();
+ // backward();
+ // delay(2000); 
+ // stop(); 
 }
