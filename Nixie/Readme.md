@@ -34,3 +34,6 @@ The author made a refrence table allowing them to call ```charTable[number]``` a
 * [Instructable with a RTC](http://www.instructables.com/id/Arduino-Nixie-Clock-for-Absolute-Beginners/)
 * [Lightweight overview, but good tables](https://idyl.io/arduino/how-to/control-a-nixie-tube-with-arduino/)
 * [Full PCB Design](http://www.instructables.com/id/simple-user-adjustable-DIY-Nixie-Clock/)
+
+## Contact
+David Mitchell / dmitchell at hazrac.org / [hazrac.org](http://www.hazrac.org) / @hazrac
