@@ -13,6 +13,13 @@ int x; //create a counting variable
 
 
 // create an array that translates decimal numbers into an appropriate byte for sending to the shift register
+// We are taking a decimal that represents the byte (8 bit) pattern we want to send to the sift register.
+// If you look at the table here: http://www.cs.uregina.ca/Links/class-info/207/Lab8/ that can be found
+// when searching for "3.2 Binary Numbers"
+// Given we set LSBFIRST we are looking at the table where 2^7 is on the right. Hence
+// 00000001 is represented as 128
+// This translates into activating the correct pin(s) on the 74141 to ground the correct digit
+// Truth table for the 74141: http://g3ynh.info/digrdout/74141.html 
 int charTable[] = {0,128,64,192,32,160,96,224,16,144,8,136,72,200,40,168,104,232,24,152,4,132,68,196,36,164,100,228,20,148,12,140,76,204,44,
 172,108,236,28,156,2,130,66,194,34,162,98,226,
 18,146,10,138,74,202,42,170,106,234,26,154,6,134,70,198,38,166,102,230,22,150,14,142,78,206,46,174,110,238,30,158,1,129,
@@ -40,10 +47,11 @@ void loop(){
     updateShiftRegister(); //send to the shift register
     delay(500);
  
-  Serial.print("x = ");
-  Serial.println(x);
-  Serial.print("nixies = ");
-  Serial.println(nixies);}
+    Serial.print("x = ");
+    Serial.println(x);
+    Serial.print("nixies = ");
+    Serial.println(nixies);
+  }
 }
   //the process of sending a byte to the shift register
 void updateShiftRegister(){
