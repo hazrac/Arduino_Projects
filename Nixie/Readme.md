@@ -12,7 +12,7 @@ You'll notice in the [Nixie Countdown](https://github.com/hazrac/Arduino_Project
  
 ```int charTable[] = {0,128,64,192,32,160,96,224,16,...```
 
-The author made a refrence table allowing them to call ```charTable[number]``` and get the 8-bit byte back taht would represent that ```number```. In this code example they are using LSBFIRST with the shiftOut() function.  This means that 2^7 (or 128) represents the 8th place of the binary number. Hence "128" represents 00000001.  This translates into activating the correct pin(s) on the 74141 to ground the correct digit.
+The author made a refrence table allowing them to call ```charTable[number]``` and get the 8-bit byte back that would represent that ```number```. In this code example they are using LSBFIRST with the shiftOut() function.  This means that 2^7 (or 128) represents the 8th place of the binary number. Hence "128" represents 00000001.  This translates into activating the correct pin(s) on the 74141 to ground the correct digit.
 
 ## ToDo
 * Create three seperate "master" functions to control the three shift registeres (which will, in turn, be connected to 6 Nixie Tubes). These will take a two digit number and display those on the set of two Nixie Tubes that shift register controls.
