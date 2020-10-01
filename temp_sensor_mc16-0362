@@ -7,7 +7,7 @@ double minimum = (-424.0/6.25);
 double straight_read = 0;
 
 void setup() {
-  // initialize the serial communications:
+  // initialising the serial communications:
   Serial.begin(9600);
 
   pinMode(analogtemp, INPUT);
