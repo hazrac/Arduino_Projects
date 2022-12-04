@@ -36,6 +36,7 @@ The author made a refrence table allowing them to call ```charTable[number]``` a
 * [Great manual with full PCBs](https://www.nixiediy.com/wp-content/uploads/2020/12/In12BlueManual.pdf)
 * [Full PCB Design](http://www.instructables.com/id/simple-user-adjustable-DIY-Nixie-Clock/)
 * [Great PCB Design - but no arduino](https://github.com/mistic100/Nixie-Clock-IN12)
+* [May be a PCB I can use. Has RS232](https://oshpark.com/shared_projects/TKBNpWE6)
 
 ## Contact
 David Mitchell / dmitchell at hazrac.org / [hazrac.org](http://www.hazrac.org) / @hazrac
