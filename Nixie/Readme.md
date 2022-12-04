@@ -35,6 +35,7 @@ The author made a refrence table allowing them to call ```charTable[number]``` a
 * [Indepth design, but not with IN12s](https://0x7d.com/2017/nixie-tube-clock/)
 * [Great manual with full PCBs](https://www.nixiediy.com/wp-content/uploads/2020/12/In12BlueManual.pdf)
 * [Full PCB Design](http://www.instructables.com/id/simple-user-adjustable-DIY-Nixie-Clock/)
+* [Great PCB Design - but no arduino](https://github.com/mistic100/Nixie-Clock-IN12)
 
 ## Contact
 David Mitchell / dmitchell at hazrac.org / [hazrac.org](http://www.hazrac.org) / @hazrac
