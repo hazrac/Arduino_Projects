@@ -32,7 +32,8 @@ The author made a refrence table allowing them to call ```charTable[number]``` a
 * [Shift Registers and Nixie Tubes - good visuals](http://jafrog.com/2014/08/30/testing-a-shift-register.html)
 * [Testing Two Nixie Tubes](http://www.instructables.com/id/Driving-two-Nixie-tubes-with-an-Arduino-via-a-shif/)
 * [Instructable with a RTC](http://www.instructables.com/id/Arduino-Nixie-Clock-for-Absolute-Beginners/)
-* [Lightweight overview, but good tables](https://idyl.io/arduino/how-to/control-a-nixie-tube-with-arduino/)
+* [Indepth design, but not with IN12s](https://0x7d.com/2017/nixie-tube-clock/)
+* [Great manual with full PCBs](https://www.nixiediy.com/wp-content/uploads/2020/12/In12BlueManual.pdf)
 * [Full PCB Design](http://www.instructables.com/id/simple-user-adjustable-DIY-Nixie-Clock/)
 
 ## Contact
