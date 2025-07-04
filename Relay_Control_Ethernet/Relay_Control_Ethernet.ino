@@ -28,6 +28,11 @@ const int RELAY_2 = RELAY_2_PIN;
 const int RELAY_3 = RELAY_3_PIN;
 const int RELAY_4 = RELAY_4_PIN;
 
+// tracking the pin activated and its state
+int pin;
+bool state;
+
+
 // Network configuration (from config.h)
 byte mac[] = MAC_ADDRESS;
 IPAddress ip(IP_ADDRESS);
@@ -63,13 +68,6 @@ void setup() {
   pinMode(RELAY_2, OUTPUT);
   pinMode(RELAY_3, OUTPUT);
   pinMode(RELAY_4, OUTPUT);
-  
-  // Initialize all relays to OFF state using config
-  SET_RELAY_STATE(RELAY_1, false);
-  SET_RELAY_STATE(RELAY_2, false);
-  SET_RELAY_STATE(RELAY_3, false);
-  SET_RELAY_STATE(RELAY_4, false);
-  
 
   // Start Ethernet connection with static IP
   Serial.println("Starting Ethernet connection with static IP...");
@@ -86,6 +84,7 @@ void setup() {
 }
 
 void loop() {
+
   // Listen for incoming clients
   EthernetClient client = server.available();
   
@@ -222,7 +221,8 @@ void setRelay(int relayIndex, bool state) {
   }
   
   relayStates[relayIndex] = state;
-  SET_RELAY_STATE(pin, state);
+  set_relay_state(pin,state);
+
   
   DEBUG_PRINT("Pin ");
   DEBUG_PRINT(pin);
@@ -264,3 +264,8 @@ void printProgmem(EthernetClient& client, const char* str) {
     client.write(c);
   }
 } 
+void set_relay_state(int pin, bool state) {
+    digitalWrite(pin, HIGH);
+    delay(150);
+    digitalWrite(pin, LOW);
+  }

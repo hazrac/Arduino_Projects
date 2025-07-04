@@ -107,10 +107,6 @@
    (index) == 2 ? RELAY_3_PIN : \
    (index) == 3 ? RELAY_4_PIN : -1)
 
-// Macro to set relay state based on configuration
-#define SET_RELAY_STATE(pin, state) \
-  digitalWrite(pin, RELAY_ACTIVE_HIGH ? (state ? HIGH : LOW) : (state ? LOW : HIGH))
-
 // Debug print macros
 #if DEBUG_ENABLED
   #if DEBUG_LEVEL >= DEBUG_LEVEL_BASIC

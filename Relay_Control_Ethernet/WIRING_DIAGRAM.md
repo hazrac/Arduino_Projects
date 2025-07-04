@@ -78,10 +78,10 @@ SparkFun RedBoard Plus + Ethernet Shield    Relay Modules
 │  │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │  │  │ │ │ │ │ │ │ │ │
 │  └─┘ └─┘ └─┘ └─┘ └─┘ └─┘ └─┘ └─┘ └─┘ │  │  └─┘ └─┘ └─┘ └─┘ │
 │                                         │  │                 │
-│  Pin 2 ─────────────────────────────────┼──┤ IN1 (Relay 1)   │
-│  Pin 3 ─────────────────────────────────┼──┤ IN2 (Relay 2)   │
-│  Pin 4 ─────────────────────────────────┼──┤ IN3 (Relay 3)   │
-│  Pin 5 ─────────────────────────────────┼──┤ IN4 (Relay 4)   │
+│  Pin 5 ─────────────────────────────────┼──┤ IN1 (Relay 1)   │
+│  Pin 6 ─────────────────────────────────┼──┤ IN2 (Relay 2)   │
+│  Pin 7 ─────────────────────────────────┼──┤ IN3 (Relay 3)   │
+│  Pin 8 ─────────────────────────────────┼──┤ IN4 (Relay 4)   │
 │                                         │  │                 │
 │  5V ────────────────────────────────────┼──┤ VCC             │
 │  GND ───────────────────────────────────┼──┤ GND             │
@@ -113,10 +113,10 @@ SparkFun RedBoard Plus + Ethernet Shield    Relay Modules
 3. **Important**: Use a separate power supply for the relay modules to avoid interference
 
 ### Step 3: Connect Control Signals
-1. **Relay 1**: Connect RedBoard Plus Pin 2 to Relay Module IN1
-2. **Relay 2**: Connect RedBoard Plus Pin 3 to Relay Module IN2
-3. **Relay 3**: Connect RedBoard Plus Pin 4 to Relay Module IN3
-4. **Relay 4**: Connect RedBoard Plus Pin 5 to Relay Module IN4
+1. **Relay 1**: Connect RedBoard Plus Pin 5 to Relay Module IN1
+2. **Relay 2**: Connect RedBoard Plus Pin 6 to Relay Module IN2
+3. **Relay 3**: Connect RedBoard Plus Pin 7 to Relay Module IN3
+4. **Relay 4**: Connect RedBoard Plus Pin 8 to Relay Module IN4
 
 ### Step 4: Connect Arduino Power to Relay Modules
 1. Connect RedBoard Plus 5V to Relay Module VCC (for logic power)
@@ -127,13 +127,14 @@ SparkFun RedBoard Plus + Ethernet Shield    Relay Modules
 2. Connect the other end to your network router/switch
 
 ## Pin Assignment Summary
+Note: Pin 4 has a special purpose on the network shield so we start at pin 5.
 
 | Arduino Pin | Relay Module | Function |
 |-------------|--------------|----------|
-| Pin 2       | IN1          | Relay 1 Control |
-| Pin 3       | IN2          | Relay 2 Control |
-| Pin 4       | IN3          | Relay 3 Control |
-| Pin 5       | IN4          | Relay 4 Control |
+| Pin 5       | IN1          | Relay 1 Control |
+| Pin 6       | IN2          | Relay 2 Control |
+| Pin 7       | IN3          | Relay 3 Control |
+| Pin 8       | IN4          | Relay 4 Control |
 | 5V          | VCC          | Logic Power |
 | GND         | GND          | Common Ground |
 
