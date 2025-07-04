@@ -21,7 +21,7 @@
 // Relay logic configuration
 // Set to true if your relays are active-high (HIGH = ON, LOW = OFF)
 // Set to false if your relays are active-low (LOW = ON, HIGH = OFF)
-#define RELAY_ACTIVE_HIGH false
+#define RELAY_ACTIVE_HIGH true
 
 // ============================================================================
 // NETWORK CONFIGURATION

@@ -19,21 +19,23 @@
 #include <SPI.h>
 #include <Ethernet.h>
 #include <avr/pgmspace.h>
+#include "config.h"
 
-// Relay pin definitions
-const int RELAY_1 = 2;
-const int RELAY_2 = 3;
-const int RELAY_3 = 4;
-const int RELAY_4 = 5;
 
-// Network configuration
-byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
-IPAddress ip(192, 168, 1, 177);
-IPAddress gateway(192, 168, 1, 1);
-IPAddress subnet(255, 255, 255, 0);
+// Relay pin definitions (from config.h)
+const int RELAY_1 = RELAY_1_PIN;
+const int RELAY_2 = RELAY_2_PIN;
+const int RELAY_3 = RELAY_3_PIN;
+const int RELAY_4 = RELAY_4_PIN;
+
+// Network configuration (from config.h)
+byte mac[] = MAC_ADDRESS;
+IPAddress ip(IP_ADDRESS);
+IPAddress gateway(GATEWAY_ADDRESS);
+IPAddress subnet(SUBNET_MASK);
 
 // Initialize Ethernet server on port 80
-EthernetServer server(80);
+EthernetServer server(SERVER_PORT);
 
 // Relay states
 bool relayStates[4] = {false, false, false, false};
@@ -45,9 +47,15 @@ const char PAGE_HEADER[] PROGMEM =
 const char PAGE_FOOTER[] PROGMEM =
   "</body></html>";
 
+// Function prototypes
+void setRelay(int relayIndex, bool state);
+void parseRequestBuffer(const char* request);
+void sendHTMLPage(EthernetClient client);
+void printProgmem(EthernetClient& client, const char* str);
+
 void setup() {
   // Initialize serial communication
-  Serial.begin(9600);
+  Serial.begin(SERIAL_BAUD_RATE);
   Serial.println("Relay Control System Starting...");
   
   // Initialize relay pins
@@ -56,21 +64,25 @@ void setup() {
   pinMode(RELAY_3, OUTPUT);
   pinMode(RELAY_4, OUTPUT);
   
-  // Initialize all relays to OFF state
-  digitalWrite(RELAY_1, HIGH);  // HIGH = OFF (assuming active-low relays)
-  digitalWrite(RELAY_2, HIGH);
-  digitalWrite(RELAY_3, HIGH);
-  digitalWrite(RELAY_4, HIGH);
+  // Initialize all relays to OFF state using config
+  SET_RELAY_STATE(RELAY_1, false);
+  SET_RELAY_STATE(RELAY_2, false);
+  SET_RELAY_STATE(RELAY_3, false);
+  SET_RELAY_STATE(RELAY_4, false);
   
-  // Start Ethernet connection
+
+  // Start Ethernet connection with static IP
+  Serial.println("Starting Ethernet connection with static IP...");
+  
   Ethernet.begin(mac, ip, gateway, subnet);
+  Serial.print("Static IP assigned: ");
+  Serial.println(Ethernet.localIP());
   
   // Start the server
   server.begin();
   
-  Serial.print("Server is at ");
-  Serial.println(Ethernet.localIP());
   Serial.println("Relay Control System Ready!");
+  Serial.println("Connect to the IP address shown above in your web browser");
 }
 
 void loop() {
@@ -80,45 +92,37 @@ void loop() {
   if (client) {
     Serial.println("New client connected");
     
-    // An HTTP request ends with a blank line
-    boolean currentLineIsBlank = true;
-    String currentLine = "";
-    String request = "";
+    // Read the first line of the request with timeout
+    String requestLine = "";
+    unsigned long startTime = millis();
+    const unsigned long timeout = 3000; // 3 second timeout
     
-    while (client.connected()) {
+    while (client.connected() && (millis() - startTime) < timeout) {
       if (client.available()) {
         char c = client.read();
-        request += c;
-        
-        // If you've got to the end of the line (received a newline
-        // character) and the line is blank, the HTTP request has ended,
-        // so you can send a reply
-        if (c == '\n' && currentLineIsBlank) {
-          // Send a standard HTTP response header
-          client.println("HTTP/1.1 200 OK");
-          client.println("Content-Type: text/html");
-          client.println("Connection: close");
-          client.println();
-          
-          // Send the HTML page
-          sendHTMLPage(client);
-          break;
-        }
-        
         if (c == '\n') {
-          // You're starting a new line
-          currentLineIsBlank = true;
-          currentLine = "";
-        } else if (c != '\r') {
-          // You've gotten a character on the current line
-          currentLineIsBlank = false;
-          currentLine += c;
+          break; // End of first line
         }
+        requestLine += c;
+        startTime = millis(); // Reset timeout on new data
       }
+      delay(1);
     }
     
-    // Parse the request for relay commands
-    parseRequest(request);
+    Serial.print("Request line: ");
+    Serial.println(requestLine);
+    
+    // Always try to parse the request
+    parseRequestBuffer(requestLine.c_str());
+    
+    // Send HTTP response
+    client.println("HTTP/1.1 200 OK");
+    client.println("Content-Type: text/html");
+    client.println("Connection: close");
+    client.println();
+    
+    // Send the HTML page
+    sendHTMLPage(client);
     
     // Give the web browser time to receive the data
     delay(1);
@@ -129,82 +133,103 @@ void loop() {
   }
 }
 
-void parseRequest(String request) {
+void parseRequestBuffer(const char* request) {
+  Serial.println("=== PARSE REQUEST BUFFER CALLED ===");
+  Serial.print("Parsing request: ");
+  Serial.println(request);
+  
   // Parse GET requests for relay control
-  if (request.indexOf("GET") != -1) {
+  if (strstr(request, "GET") != NULL) {
+    Serial.println("GET request detected");
+    
     // Individual relay control
-    if (request.indexOf("/relay1/on") != -1) {
+    if (strstr(request, "/relay1/on") != NULL) {
       setRelay(0, true);
       Serial.println("Relay 1 ON");
-    } else if (request.indexOf("/relay1/off") != -1) {
+    } else if (strstr(request, "/relay1/off") != NULL) {
       setRelay(0, false);
       Serial.println("Relay 1 OFF");
-    } else if (request.indexOf("/relay2/on") != -1) {
+    } else if (strstr(request, "/relay2/on") != NULL) {
       setRelay(1, true);
       Serial.println("Relay 2 ON");
-    } else if (request.indexOf("/relay2/off") != -1) {
+    } else if (strstr(request, "/relay2/off") != NULL) {
       setRelay(1, false);
       Serial.println("Relay 2 OFF");
-    } else if (request.indexOf("/relay3/on") != -1) {
+    } else if (strstr(request, "/relay3/on") != NULL) {
       setRelay(2, true);
       Serial.println("Relay 3 ON");
-    } else if (request.indexOf("/relay3/off") != -1) {
+    } else if (strstr(request, "/relay3/off") != NULL) {
       setRelay(2, false);
       Serial.println("Relay 3 OFF");
-    } else if (request.indexOf("/relay4/on") != -1) {
+    } else if (strstr(request, "/relay4/on") != NULL) {
       setRelay(3, true);
       Serial.println("Relay 4 ON");
-    } else if (request.indexOf("/relay4/off") != -1) {
+    } else if (strstr(request, "/relay4/off") != NULL) {
       setRelay(3, false);
       Serial.println("Relay 4 OFF");
     }
     // Pair control
-    else if (request.indexOf("/pair1/on") != -1) {
+    else if (strstr(request, "/pair1/on") != NULL) {
       setRelay(0, true);
       setRelay(1, true);
       Serial.println("Pair 1 ON (Relays 1 & 2)");
-    } else if (request.indexOf("/pair1/off") != -1) {
+    } else if (strstr(request, "/pair1/off") != NULL) {
       setRelay(0, false);
       setRelay(1, false);
       Serial.println("Pair 1 OFF (Relays 1 & 2)");
-    } else if (request.indexOf("/pair2/on") != -1) {
+    } else if (strstr(request, "/pair2/on") != NULL) {
       setRelay(2, true);
       setRelay(3, true);
       Serial.println("Pair 2 ON (Relays 3 & 4)");
-    } else if (request.indexOf("/pair2/off") != -1) {
+    } else if (strstr(request, "/pair2/off") != NULL) {
       setRelay(2, false);
       setRelay(3, false);
       Serial.println("Pair 2 OFF (Relays 3 & 4)");
     }
     // All relays control
-    else if (request.indexOf("/all/on") != -1) {
+    else if (strstr(request, "/all/on") != NULL) {
       setRelay(0, true);
       setRelay(1, true);
       setRelay(2, true);
       setRelay(3, true);
       Serial.println("All Relays ON");
-    } else if (request.indexOf("/all/off") != -1) {
+    } else if (strstr(request, "/all/off") != NULL) {
       setRelay(0, false);
       setRelay(1, false);
       setRelay(2, false);
       setRelay(3, false);
       Serial.println("All Relays OFF");
+    } else {
+      Serial.println("No relay command found in request");
     }
+  } else {
+    Serial.println("No GET request detected");
   }
+  Serial.println("=== PARSE REQUEST BUFFER END ===");
 }
 
 void setRelay(int relayIndex, bool state) {
-  int pin;
-  switch (relayIndex) {
-    case 0: pin = RELAY_1; break;
-    case 1: pin = RELAY_2; break;
-    case 2: pin = RELAY_3; break;
-    case 3: pin = RELAY_4; break;
-    default: return;
+  DEBUG_PRINT("setRelay called: relay=");
+  DEBUG_PRINT(relayIndex);
+  DEBUG_PRINT(", state=");
+  DEBUG_PRINTLN(state ? "ON" : "OFF");
+  
+  int pin = GET_RELAY_PIN(relayIndex);
+  if (pin == -1) {
+    DEBUG_PRINTLN("Invalid relay index");
+    return;
   }
   
   relayStates[relayIndex] = state;
-  digitalWrite(pin, state ? LOW : HIGH);  // LOW = ON, HIGH = OFF (active-low)
+  SET_RELAY_STATE(pin, state);
+  
+  DEBUG_PRINT("Pin ");
+  DEBUG_PRINT(pin);
+  DEBUG_PRINT(" set to ");
+  DEBUG_PRINT(state ? "ON" : "OFF");
+  DEBUG_PRINT(" (");
+  DEBUG_PRINT(RELAY_ACTIVE_HIGH ? (state ? "HIGH" : "LOW") : (state ? "LOW" : "HIGH"));
+  DEBUG_PRINTLN(")");
 }
 
 void sendHTMLPage(EthernetClient client) {
