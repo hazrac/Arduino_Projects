@@ -88,13 +88,13 @@ void initializeEthernet() {
   DEBUG_PRINTLN("Initializing Ethernet connection...");
   
   // Start Ethernet connection
-  if (Ethernet.begin(mac, ip, gateway, subnet)) {
-    ethernetConnected = true;
-    DEBUG_PRINT("Ethernet initialized successfully. IP: ");
-    DEBUG_PRINTLN(Ethernet.localIP());
-  } else {
-    DEBUG_PRINTLN("Failed to configure Ethernet using DHCP");
-    DEBUG_PRINTLN("Using static IP configuration...");
+ // if (Ethernet.begin(mac, ip, gateway, subnet)) {
+ //   ethernetConnected = true;
+ //   DEBUG_PRINT("Ethernet initialized successfully. IP: ");
+ //   DEBUG_PRINTLN(Ethernet.localIP());
+ // } else {
+ //   DEBUG_PRINTLN("Failed to configure Ethernet using DHCP");
+ //   DEBUG_PRINTLN("Using static IP configuration...");
     
     // Try static configuration
     Ethernet.begin(mac, ip, gateway, subnet);
