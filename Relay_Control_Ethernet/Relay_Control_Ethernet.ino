@@ -141,6 +141,7 @@ void parseRequestBuffer(const char* request) {
   // Parse GET requests for relay control
   if (strstr(request, "GET") != NULL) {
     Serial.println("GET request detected");
+    Serial.println(request);
     
     // Individual relay control
     if (strstr(request, "/relay1/on") != NULL) {

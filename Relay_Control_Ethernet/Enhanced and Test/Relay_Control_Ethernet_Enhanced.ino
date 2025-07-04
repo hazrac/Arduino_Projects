@@ -98,6 +98,8 @@ void initializeEthernet() {
     
     // Try static configuration
     Ethernet.begin(mac, ip, gateway, subnet);
+    DEBUG_PRINTLN("This is what I say your IP is: ");
+    DEBUG_PRINT(ip);
     ethernetConnected = true;
     DEBUG_PRINT("Static IP configured: ");
     DEBUG_PRINTLN(Ethernet.localIP());

@@ -13,10 +13,11 @@
 // ============================================================================
 
 // Digital pins connected to relay modules
-#define RELAY_1_PIN 2
-#define RELAY_2_PIN 3
-#define RELAY_3_PIN 4
-#define RELAY_4_PIN 5
+// NOTE: pin 4 is used by the NIC, so you have to skip it
+#define RELAY_1_PIN 5
+#define RELAY_2_PIN 6
+#define RELAY_3_PIN 7
+#define RELAY_4_PIN 8
 
 // Relay logic configuration
 // Set to true if your relays are active-high (HIGH = ON, LOW = OFF)
