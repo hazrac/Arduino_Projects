@@ -1,4 +1,5 @@
 {
     "board": "arduino:sam:arduino_due_x",
-    "sketch": "BasicTests/BasicTests.ino"
+    "sketch": "BasicTests/BasicTests.ino",
+    "port": "/dev/tty.usbserial-10"
 }
