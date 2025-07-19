@@ -33,10 +33,10 @@ This Arduino project controls four relays using a SparkFun RedBoard Plus with an
 SparkFun RedBoard Plus    Relay Module
 ┌─────────────────┐      ┌─────────────┐
 │                 │      │             │
-│ Pin 2 ──────────┼──────┤ IN1         │
-│ Pin 3 ──────────┼──────┤ IN2         │
-│ Pin 4 ──────────┼──────┤ IN3         │
-│ Pin 5 ──────────┼──────┤ IN4         │
+│ Pin 5 ──────────┼──────┤ IN1         │
+│ Pin 6 ──────────┼──────┤ IN2         │
+│ Pin 7 ──────────┼──────┤ IN3         │
+│ Pin 8 ──────────┼──────┤ IN4         │
 │                 │      │             │
 │ 5V ─────────────┼──────┤ VCC         │
 │ GND ────────────┼──────┤ GND         │
@@ -77,7 +77,7 @@ IPAddress subnet(255, 255, 255, 0);
 
 ### 1. Hardware Setup
 1. Connect the Ethernet Shield to the RedBoard Plus
-2. Connect relay modules to pins 2, 3, 4, and 5
+2. Connect relay modules to pins 5, 6, 7, and 8
 3. Connect power supply to relay modules
 4. Connect Ethernet cable to the Ethernet Shield
 
