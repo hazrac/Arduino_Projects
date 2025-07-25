@@ -237,6 +237,11 @@ void sendHTMLPage(EthernetClient client) {
   printProgmem(client, PAGE_HEADER);
 
   // Individual relay controls (minimal, no CSS)
+  // This is what I need to change 
+  // Relay 1: MK4s Light
+  // Relay 2: MK4s Fan
+  // Relay 3: MK4s MMU Light
+  // Relay 4: MK4s MMU Fan
   for (uint8_t i = 1; i <= 4; i++) {
     client.print("Relay "); client.print(i); client.print(": ");
     client.print(relayStates[i-1] ? "ON" : "OFF");
@@ -245,8 +250,8 @@ void sendHTMLPage(EthernetClient client) {
   }
 
   // Pair controls
-  client.print("<br>Pair 1 (1&2): <a href='/pair1/on'>ON</a> <a href='/pair1/off'>OFF</a><br>");
-  client.print("Pair 2 (3&4): <a href='/pair2/on'>ON</a> <a href='/pair2/off'>OFF</a><br>");
+  client.print("<br>MK4s Light and Fan: <a href='/pair1/on'>ON</a> <a href='/pair1/off'>OFF</a><br>");
+  client.print("MK4s MMU Light and Fan: <a href='/pair2/on'>ON</a> <a href='/pair2/off'>OFF</a><br>");
 
   // All relays control
   client.print("<br>All: <a href='/all/on'>ON</a> <a href='/all/off'>OFF</a><br>");
