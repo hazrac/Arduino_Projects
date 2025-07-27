@@ -47,7 +47,7 @@ bool relayStates[4] = {false, false, false, false};
 
 // Move static HTML/CSS to PROGMEM to save RAM
 const char PAGE_HEADER[] PROGMEM =
-  "<!DOCTYPE HTML><html><head><title>Relay Control</title></head><body><h1>Relay Control</h1>";
+  "<!DOCTYPE HTML><html><head><title>Prusa Enclosure Control</title></head><body><h1>Prusa Enclosure Control</h1>";
 
 const char PAGE_FOOTER[] PROGMEM =
   "</body></html>";
@@ -241,22 +241,22 @@ void sendHTMLPage(EthernetClient client) {
   // Relay 1: MK4s Light
   client.print("MK4 Light: ");
   client.print(relayStates[0] ? "ON" : "OFF");
-  client.print("<a href='/relay"); client.print(1); client.print("/on'>ON</a> ");
+  client.print(" - <a href='/relay"); client.print(1); client.print("/on'>ON</a> ");
   client.print("<a href='/relay"); client.print(1); client.print("/off'>OFF</a><br>");
   // Relay 2: MK4s Fan
   client.print("MK4 Fan: ");
   client.print(relayStates[1] ? "ON" : "OFF");
-  client.print("<a href='/relay"); client.print(2); client.print("/on'>ON</a> ");
+  client.print(" - <a href='/relay"); client.print(2); client.print("/on'>ON</a> ");
   client.print("<a href='/relay"); client.print(2); client.print("/off'>OFF</a><br>");
   // Relay 3: MK4s MMU Light
   client.print("MK4 MMU Light: ");
   client.print(relayStates[2] ? "ON" : "OFF");
-  client.print("<a href='/relay"); client.print(3); client.print("/on'>ON</a> ");
+  client.print(" - <a href='/relay"); client.print(3); client.print("/on'>ON</a> ");
   client.print("<a href='/relay"); client.print(3); client.print("/off'>OFF</a><br>");
   // Relay 4: MK4s MMU Fan
   client.print("MK4 MMU Fan: ");
   client.print(relayStates[3] ? "ON" : "OFF");
-  client.print("<a href='/relay"); client.print(4); client.print("/on'>ON</a> ");
+  client.print(" - <a href='/relay"); client.print(4); client.print("/on'>ON</a> ");
   client.print("<a href='/relay"); client.print(4); client.print("/off'>OFF</a><br>");
 
   // Pair controls
