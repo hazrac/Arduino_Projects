@@ -235,19 +235,29 @@ void setRelay(int relayIndex, bool state) {
 
 void sendHTMLPage(EthernetClient client) {
   printProgmem(client, PAGE_HEADER);
-
-  // Individual relay controls (minimal, no CSS)
-  // This is what I need to change 
+  
+  
+  // Outline each interface clearly
   // Relay 1: MK4s Light
+  client.print("MK4 Light: ");
+  client.print(relayStates[0] ? "ON" : "OFF");
+  client.print("<a href='/relay"); client.print(1); client.print("/on'>ON</a> ");
+  client.print("<a href='/relay"); client.print(1); client.print("/off'>OFF</a><br>");
   // Relay 2: MK4s Fan
+  client.print("MK4 Fan: ");
+  client.print(relayStates[1] ? "ON" : "OFF");
+  client.print("<a href='/relay"); client.print(2); client.print("/on'>ON</a> ");
+  client.print("<a href='/relay"); client.print(2); client.print("/off'>OFF</a><br>");
   // Relay 3: MK4s MMU Light
+  client.print("MK4 MMU Light: ");
+  client.print(relayStates[2] ? "ON" : "OFF");
+  client.print("<a href='/relay"); client.print(3); client.print("/on'>ON</a> ");
+  client.print("<a href='/relay"); client.print(3); client.print("/off'>OFF</a><br>");
   // Relay 4: MK4s MMU Fan
-  for (uint8_t i = 1; i <= 4; i++) {
-    client.print("Relay "); client.print(i); client.print(": ");
-    client.print(relayStates[i-1] ? "ON" : "OFF");
-    client.print(" <a href='/relay"); client.print(i); client.print("/on'>ON</a> ");
-    client.print("<a href='/relay"); client.print(i); client.print("/off'>OFF</a><br>");
-  }
+  client.print("MK4 MMU Fan: ");
+  client.print(relayStates[3] ? "ON" : "OFF");
+  client.print("<a href='/relay"); client.print(4); client.print("/on'>ON</a> ");
+  client.print("<a href='/relay"); client.print(4); client.print("/off'>OFF</a><br>");
 
   // Pair controls
   client.print("<br>MK4s Light and Fan: <a href='/pair1/on'>ON</a> <a href='/pair1/off'>OFF</a><br>");
